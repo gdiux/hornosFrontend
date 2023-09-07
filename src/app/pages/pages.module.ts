@@ -14,6 +14,7 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { HornosComponent } from './hornos/hornos.component';
 import { TermometrosComponent } from './termometros/termometros.component';
+import { HornoComponent } from './horno/horno.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { TermometrosComponent } from './termometros/termometros.component';
     PerfilComponent,
     UsuariosComponent,
     HornosComponent,
-    TermometrosComponent
+    TermometrosComponent,
+    HornoComponent
   ],
   exports: [
     DashboardComponent,

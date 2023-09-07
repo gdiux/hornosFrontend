@@ -1,1 +1,166 @@
-<p>hornos works!</p>
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+    <div class="col-12">
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Lista de Hornos</h4>
+                <h6 class="card-subtitle">Crea y visualiza todos los Hornos</h6>
+
+                <div class="row m-t-40">
+
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3 col-xlg-3">
+                        <div class="card">
+                            <div class="box bg-info text-center">
+                                <h1 class="font-light text-white"> {{ total }} </h1>
+                                <h6 class="text-white">Hornos</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+
+                </div>
+
+                <!-- SEARCH BTN NEW -->
+                <div class="d-flex justify-content-between flex-wrap mt-1">
+                    
+
+                    <div class="my-2">
+
+                        <div>
+                            <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#add-horno">Crear Horno</button>
+                        </div>
+
+                        <label for="mostrar" class="my-2">Mostrar: </label>
+                        <select name="" id="" [value]="query.hasta" #mostrar (change)="limiteChange(mostrar.value)">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="250">250</option>
+                            <option value="500">500</option>
+                        </select>
+
+                    </div>
+                </div>
+                <!-- SEARCH BTN NEW -->
+
+                <div class="table-responsive">
+                    <table id="demo-foo-addrow" class="table m-t-30 table-hover no-wrap contact-list" data-page-size="10">
+                        <thead>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Estado</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngIf="hornos.length === 0">
+                                <td colspan="7">
+                                    <h3 class="mb-0 text-center"> Aun no existen registros de hornos... </h3>
+                                </td>
+                            </tr>
+
+                            <ng-container *ngIf="hornos.length > 0">
+
+                                <tr *ngFor="let horno of hornos">
+                                    <td class="align-middle">
+                                        <a [routerLink]="['/dashboard/horno', horno.hid ]" class="text-decoration-none text-info pointer">
+                                            {{ horno.name }} 
+                                        </a>
+                                    </td>
+                                    <td class="align-middle">
+                                        <span *ngIf="!horno.status" class="label label-danger"> Deshabilitado </span>
+                                        <span *ngIf="horno.status" class="label label-success"> Habilitado </span>
+                                    </td>
+                                    <td class="align-middle">
+
+                                        <a [routerLink]="['/dashboard/horno', horno.hid ]"  class="text-decoration-none text-info pointer">
+                                            <i class="mdi mdi-call-made"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            </ng-container>
+
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+
+                                <td colspan="7">
+                                    <div class="btn-group" role="group" aria-label="First group">
+                                        <button [disabled]="query.desde === 0" (click)="cambiarPagina(-10)" type="button" class="btn btn-dark text-white">Atras</button>
+                                        <button [disabled]="( query.desde + query.hasta ) >= total" (click)="cambiarPagina(10)" type="button" class="btn btn-dark text-white">Siguiente</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->
+
+<!-- ========================================================= 
+MODAL CREAR CENTRO DE VOTACIÖN 
+======================================================== -->
+<div id="add-horno" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabelNewCenter" aria-hidden="true" #modalNewUser>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabelNewCenter">Nuevo Horno</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal form-material" autocomplete="off" [formGroup]="formNewHorno" (ngSubmit)="createHorno()">
+
+                    <div class="form-group has-danger">
+
+                        <div class="col-md-12 mb-3">
+                            <input formControlName="name" type="text" class="form-control" placeholder="Nombre del horno">
+                            <div *ngIf="validate('name')" class="form-control-feedback">
+                                <small> El nombre del horno es importante </small>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>Seleccionar termometro de Baja</label>
+                        <select formControlName="baja" class="form-control">
+                            <option value="none">Seleccionar Termometro</option>
+                            <option *ngFor="let termometro of termometros" [value]="termometro.tid" > {{ termometro.code }} </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Seleccionar termometro de Alta</label>
+                        <select formControlName="alta" class="form-control">
+                            <option value="none">Seleccionar Termometro</option>
+                            <option *ngFor="let termometro of termometros" [value]="termometro.tid" > {{ termometro.code }} </option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-info waves-effect btn-block">Guardar</button>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

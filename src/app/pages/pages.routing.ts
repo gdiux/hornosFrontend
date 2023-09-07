@@ -12,6 +12,7 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { HornosComponent } from './hornos/hornos.component';
 import { TermometrosComponent } from './termometros/termometros.component';
+import { HornoComponent } from './horno/horno.component';
 
 
 // COMPONENTS
@@ -25,6 +26,7 @@ const routes: Routes = [
       [
         { path: '', component: DashboardComponent, data:{ title: 'Dashboard' } },
         { path: 'perfil/:id', component: PerfilComponent, canActivate: [AdminGuard], data:{ title: 'Perfil' } },
+        { path: 'horno/:id', component: HornoComponent, canActivate: [AdminGuard], data:{ title: 'Horno' } },
         { path: 'hornos', component: HornosComponent, canActivate: [AdminGuard], data:{ title: 'Hornos' } },
         { path: 'termometros', component: TermometrosComponent, canActivate: [AdminGuard], data:{ title: 'Termometros' } },
         { path: 'usuarios', component: UsuariosComponent, canActivate: [AdminGuard], data:{ title: 'Usuarios' } },
