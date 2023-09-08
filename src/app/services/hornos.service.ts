@@ -49,6 +49,13 @@ export class HornosService {
   }
 
   /** ================================================================
+   *  LOAD HORNOS
+  ==================================================================== */
+  loadHornoDashboard(){
+    return this.http.get<{ok: boolean, hornos: Horno[], total: number}>( `${base_url}/hornos/dashboard/temp`, this.headers );
+  }
+
+  /** ================================================================
    *  CREATE HORNO
   ==================================================================== */
   createHorno( formaData: any ){

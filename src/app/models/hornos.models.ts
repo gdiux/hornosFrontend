@@ -1,3 +1,4 @@
+import { Temperatura } from "./temperaturas.model";
 import { Termometro } from "./termometros.model";
 
 export class Horno{
@@ -9,5 +10,7 @@ export class Horno{
         public fecha: Date,
         public hid?: string,
         public _id?: string,
+        public tempA?: Temperatura,
+        public tempB?: Temperatura,
     ){}
 }

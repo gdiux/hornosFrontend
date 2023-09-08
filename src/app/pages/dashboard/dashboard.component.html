@@ -1,1 +1,88 @@
-<p>dashboard works!</p>
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+    <div class="col-12">
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Lista de Hornos Activo</h4>
+                <h6 class="card-subtitle">Tabla de los ultimos registros de temperatura de cada horno</h6>
+
+                <div class="row m-t-40">
+
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3 col-xlg-3">
+                        <div class="card">
+                            <div class="box bg-info text-center">
+                                <h1 class="font-light text-white"> {{ total }} </h1>
+                                <h6 class="text-white">Hornos</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+
+                </div>
+
+                <div class="table-responsive">
+                    <table id="demo-foo-addrow" class="table m-t-30 table-hover no-wrap contact-list" data-page-size="10">
+                        <thead>
+                            <tr>
+                                <th>Horno</th>
+                                <th class="text-center">Temperatura Baja</th>
+                                <th class="text-center">Fecha</th>
+                                <th class="text-center">Temperatura Alta</th>
+                                <th class="text-center">Fecha</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngIf="hornos.length === 0">
+                                <td colspan="7">
+                                    <h3 class="mb-0 text-center"> Aun no existen registros de hornos... </h3>
+                                </td>
+                            </tr>
+
+                            <ng-container *ngIf="hornos.length > 0">
+
+                                <tr *ngFor="let horno of hornos">
+                                    <td class="align-middle">
+                                        <a [routerLink]="['/dashboard/horno', horno.hid ]" class="text-decoration-none text-info pointer">
+                                            {{ horno.name }} 
+                                        </a>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        {{ horno.tempB?.temperatura }}
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        {{ horno.tempB?.fecha | date:'short' }}
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        {{ horno.tempA?.temperatura }}
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        {{ horno.tempA?.fecha | date:'short' }}
+                                    </td>
+                                    <td class="align-middle text-center">
+
+                                        <a [routerLink]="['/dashboard/horno', horno.hid ]"  class="text-decoration-none text-info pointer">
+                                            <i class="mdi mdi-call-made"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            </ng-container>
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->
