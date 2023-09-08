@@ -42,6 +42,13 @@ export class HornosService {
   }
 
   /** ================================================================
+   *  LOAD HORNOS
+  ==================================================================== */
+  loadHornoId(id: string){
+    return this.http.get<{ok: boolean, horno: Horno}>( `${base_url}/hornos/${id}`, this.headers );
+  }
+
+  /** ================================================================
    *  CREATE HORNO
   ==================================================================== */
   createHorno( formaData: any ){

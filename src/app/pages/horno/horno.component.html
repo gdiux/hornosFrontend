@@ -1,1 +1,91 @@
-<p>horno works!</p>
+<div class="card">
+    <div class="card-body">
+        <h2 *ngIf="horno" class="mb-0 text-center" > {{ horno.name }} </h2>
+    </div>
+</div>
+
+<div class="d-flex flex-wrap justify-content-around">
+
+    <div class="card">
+        <div class="card-body">
+            <h2 class="mb-0">Termocupula Alta</h2>
+
+            <div class="table-responsive">
+                <table id="demo-foo-addrow" class="table m-t-30 table-hover no-wrap contact-list" data-page-size="10">
+                    <thead>
+                        <tr>                            
+                            <th>Fecha</th>
+                            <th>Temperatura</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr *ngIf="altas.length === 0">
+                            <td colspan="7">
+                                <h3 class="mb-0 text-center"> Aun no existen registros de temperaturas Altas</h3>
+                            </td>
+                        </tr>
+
+                        <ng-container *ngIf="altas.length > 0">
+
+                            <tr *ngFor="let alta of altas">
+                                <td class="align-middle">
+                                    {{ alta.fecha | date: 'd/M/yy, h:mm a' }}
+                                </td>
+                                <td class="align-middle">
+                                    <p class="mb-0 text-right">
+                                        {{ alta.temperatura }}°
+                                    </p>
+                                </td>
+                                
+                            </tr>
+
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h2 class="mb-0">Termocupula Baja</h2>
+
+            <div class="table-responsive">
+                <table id="demo-foo-addrow" class="table m-t-30 table-hover no-wrap contact-list" data-page-size="10">
+                    <thead>
+                        <tr>                            
+                            <th>Fecha</th>
+                            <th>Temperatura</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr *ngIf="bajas.length === 0">
+                            <td colspan="7">
+                                <h3 class="mb-0 text-center"> Aun no existen registros de temperaturas Bajas</h3>
+                            </td>
+                        </tr>
+
+                        <ng-container *ngIf="bajas.length > 0">
+
+                            <tr *ngFor="let baja of bajas">
+                                <td class="align-middle">
+                                    {{ baja.fecha | date: 'd/M/yy, h:mm a' }}
+                                </td>
+                                <td class="align-middle">
+                                    <p class="mb-0 text-right">
+                                        {{ baja.temperatura }}°
+                                    </p>
+                                </td>
+                                
+                            </tr>
+
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
