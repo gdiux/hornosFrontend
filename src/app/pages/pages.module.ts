@@ -1,8 +1,18 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import localEs from '@angular/common/locales/es-CO'
+import { registerLocaleData } from '@angular/common'
+
+registerLocaleData(localEs, 'es-CO');
+
+// MODULES
+import { NgChartsModule } from 'ng2-charts';
+import { PipesModule } from '../pipes/pipes.module';
+
+// COMPONENTS
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FooterComponent } from '../shared/footer/footer.component';
@@ -11,7 +21,6 @@ import { BreadcrumbsComponent } from '../shared/breadcrumbs/breadcrumbs.componen
 import { SidebarComponent } from '../shared/sidebar/sidebar.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
-import { PipesModule } from '../pipes/pipes.module';
 import { HornosComponent } from './hornos/hornos.component';
 import { TermometrosComponent } from './termometros/termometros.component';
 import { HornoComponent } from './horno/horno.component';
@@ -40,7 +49,9 @@ import { HornoComponent } from './horno/horno.component';
     RouterModule,    
     FormsModule,
     ReactiveFormsModule,
-    PipesModule
-  ]
+    PipesModule,
+    NgChartsModule
+  ],
+  providers: [{ provide: LOCALE_ID, useValue: 'es-CO' }],
 })
 export class PagesModule { }

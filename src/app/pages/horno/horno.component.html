@@ -1,54 +1,131 @@
 <div class="card">
     <div class="card-body">
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#update-horno">Editar Horno</button>
+        </div>
         <h2 *ngIf="horno" class="mb-0 text-center" > {{ horno.name }} </h2>
+
+        <hr>
+
+        <div class="d-flex justify-content-center flex-wrap gap-4">            
+
+            <div class="form-group mr-2">
+                <label class="" for="">Desde</label>
+                <input type="datetime-local" class="form-control" (change)="initial.value" #initial>
+            </div>
+
+            <div class="form-group mr-2">
+                <label class="" for="">Hasta</label>
+                <input type="datetime-local" class="form-control" (change)="end.value" #end>
+            </div>
+
+            <div class="col-auto ms-2 d-flex align-items-center">
+                <button type="button" class="btn btn-outline-success" (click)="exportar(initial.value, end.value)"> 
+                    <i class="fa fa-file-excel-o"></i> Exportar 
+                </button>
+            </div>
+            
+            
+            
+        </div>
+
+
+
     </div>
 </div>
 
 <div class="d-flex flex-wrap justify-content-around">
 
-    <div class="card">
-        <div class="card-body">
-            <h2 class="mb-0">Termocupula Alta</h2>
+    <div class="col-md-6">
 
-            <div class="table-responsive">
-                <table id="demo-foo-addrow" class="table m-t-30 table-hover no-wrap contact-list" data-page-size="10">
-                    <thead>
-                        <tr>                            
-                            <th>Fecha</th>
-                            <th>Temperatura</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        <tr *ngIf="altas.length === 0">
-                            <td colspan="7">
-                                <h3 class="mb-0 text-center"> Aun no existen registros de temperaturas Altas</h3>
-                            </td>
-                        </tr>
-
-                        <ng-container *ngIf="altas.length > 0">
-
-                            <tr *ngFor="let alta of altas">
-                                <td class="align-middle">
-                                    {{ alta.fecha | date: 'd/M/yy, h:mm a' }}
-                                </td>
-                                <td class="align-middle">
-                                    <p class="mb-0 text-right">
-                                        {{ alta.temperatura }}°
-                                    </p>
-                                </td>
-                                
-                            </tr>
-
-                        </ng-container>
-                    </tbody>
-                </table>
+        <div class="card mb-0">
+            <div class="d-flex flex-row">
+                <div class="p-10 bg-danger">
+                    <h3 class="text-white box m-b-0"><i class="fa fa-thermometer"></i></h3></div>
+                <div class="align-self-center m-l-20">
+                    <h3 class="m-b-0 text-danger">Termometro</h3>
+                    <h5 *ngIf="horno" class="text-muted m-b-0">Codigo {{ horno.alta.code }} </h5></div>
             </div>
+        </div>
 
+        <div class="card">
+            <div class="card-body">
+
+                <div class="col-12">
+                    <canvas baseChart height="400"
+                        [type]="'line'"
+                        [data]="lineChartDataAlta"
+                        [options]="lineChartOptions"
+                        [legend]="lineChartLegend">
+                    </canvas>
+                </div>
+
+                <h2 class="mb-0">Termocupula Alta</h2>
+                
+                
+                
+                <div class="table-responsive">
+                    <table id="demo-foo-addrow" class="table m-t-30 table-hover no-wrap contact-list" data-page-size="10">
+                        <thead>
+                            <tr>                            
+                                <th>Fecha</th>
+                                <th>Temperatura</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr *ngIf="altas.length === 0">
+                                <td colspan="7">
+                                    <h3 class="mb-0 text-center"> Aun no existen registros de temperaturas Altas</h3>
+                                </td>
+                            </tr>
+                            
+                            <ng-container *ngIf="altas.length > 0">
+                                
+                                <tr *ngFor="let alta of altas">
+                                    <td class="align-middle">
+                                        {{ alta.fecha | date:'medium' }}
+                                    </td>
+                                    <td class="align-middle">
+                                        <p class="mb-0 text-right">
+                                            {{ alta.temperatura }}°
+                                        </p>
+                                    </td>
+                                    
+                                </tr>
+                                
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
         </div>
     </div>
-    <div class="card">
-        <div class="card-body">
+        
+    <div class="col-md-6">
+
+        <div class="card mb-0">
+            <div class="d-flex flex-row">
+                <div class="p-10 bg-info">
+                    <h3 class="text-white box m-b-0"><i class="fa fa-thermometer-1"></i></h3></div>
+                <div class="align-self-center m-l-20">
+                    <h3 class="m-b-0 text-info"> Termometro </h3>
+                    <h5 *ngIf="horno" class="text-muted m-b-0">Codigo {{ horno.baja.code }} </h5></div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+
+            <div class="col-12">
+                <canvas baseChart height="400"
+                    [type]="'line'"
+                    [data]="lineChartDataBaja"
+                    [options]="lineChartOptions"
+                    [legend]="lineChartLegend">
+                </canvas>
+            </div>
+
             <h2 class="mb-0">Termocupula Baja</h2>
 
             <div class="table-responsive">
@@ -66,12 +143,12 @@
                                 <h3 class="mb-0 text-center"> Aun no existen registros de temperaturas Bajas</h3>
                             </td>
                         </tr>
-
+                        
                         <ng-container *ngIf="bajas.length > 0">
-
+                            
                             <tr *ngFor="let baja of bajas">
                                 <td class="align-middle">
-                                    {{ baja.fecha | date: 'd/M/yy, h:mm a' }}
+                                    {{ baja.fecha | date:'short' }}
                                 </td>
                                 <td class="align-middle">
                                     <p class="mb-0 text-right">
@@ -87,5 +164,60 @@
             </div>
         </div>
     </div>
+    </div>
 
+</div>
+
+<!-- ========================================================= 
+MODAL CREAR CENTRO DE VOTACIÖN 
+======================================================== -->
+<div id="update-horno" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabelNewCenter" aria-hidden="true" #modalNewUser>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabelNewCenter">Editar Horno</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal form-material" autocomplete="off" [formGroup]="formHorno" (ngSubmit)="updateHorno()">
+
+                    <div class="form-group has-danger">
+
+                        <div class="col-md-12 mb-3">
+                            <input formControlName="name" type="text" class="form-control" placeholder="Nombre del horno">
+                            <div *ngIf="validate('name')" class="form-control-feedback">
+                                <small> El nombre del horno es importante </small>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>Seleccionar termometro de Baja</label>
+                        <select formControlName="baja" class="form-control">
+                            <option value="none">Seleccionar Termometro</option>
+                            <option *ngFor="let termometro of termometros" [value]="termometro.tid" > {{ termometro.code }} </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Seleccionar termometro de Alta</label>
+                        <select formControlName="alta" class="form-control">
+                            <option value="none">Seleccionar Termometro</option>
+                            <option *ngFor="let termometro of termometros" [value]="termometro.tid" > {{ termometro.code }} </option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-info waves-effect btn-block">Guardar</button>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
 </div>

@@ -29,9 +29,9 @@
                         <thead>
                             <tr>
                                 <th>Horno</th>
-                                <th class="text-center">Temperatura Baja</th>
-                                <th class="text-center">Fecha</th>
                                 <th class="text-center">Temperatura Alta</th>
+                                <th class="text-center">Fecha</th>
+                                <th class="text-center">Temperatura Baja</th>
                                 <th class="text-center">Fecha</th>
                                 <th></th>
                             </tr>
@@ -53,16 +53,19 @@
                                         </a>
                                     </td>
                                     <td class="align-middle text-center">
-                                        {{ horno.tempB?.temperatura }}
+                                        {{ horno.alta.temperatura || 'No se ha registrado temperatura' }}
                                     </td>
                                     <td class="align-middle text-center">
-                                        {{ horno.tempB?.fecha | date:'short' }}
+                                        <span *ngIf="horno.alta.temperatura"> {{ horno.alta.fecha | date:'short' }} </span>
+                                        <span *ngIf="!horno.alta.temperatura"> --/--/---- --:-- </span>
+                                        
                                     </td>
                                     <td class="align-middle text-center">
-                                        {{ horno.tempA?.temperatura }}
+                                        {{ horno.baja.temperatura || 'No se ha registrado temperatura' }}
                                     </td>
                                     <td class="align-middle text-center">
-                                        {{ horno.tempA?.fecha | date:'short' }}
+                                        <span *ngIf="horno.baja.temperatura"> {{ horno.baja.fecha | date:'short' }} </span>
+                                        <span *ngIf="!horno.baja.temperatura"> --/--/---- --:-- </span>
                                     </td>
                                     <td class="align-middle text-center">
 

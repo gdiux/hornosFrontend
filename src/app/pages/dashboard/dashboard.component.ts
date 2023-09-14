@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Horno } from 'src/app/models/hornos.models';
 import { HornosService } from 'src/app/services/hornos.service';
 import Swal from 'sweetalert2';
@@ -8,12 +8,25 @@ import Swal from 'sweetalert2';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(  private hornosService: HornosService){}
 
+  timer:any;
+
   ngOnInit(): void {
     this.loadHornos();
+    this.timer= this.interval();
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.timer);
+  }
+
+  interval(){
+    return setInterval( () => {
+      this.loadHornos();      
+    }, 60000)
   }
 
   /** ================================================================
@@ -27,8 +40,7 @@ export class DashboardComponent implements OnInit {
         .subscribe( ({hornos, total}) => {
 
           this.hornos = hornos;
-          this.total = total;
-          
+          this.total = total;          
 
         }, (err) => {
           console.log(err);
