@@ -325,9 +325,6 @@ export class HornoComponent implements OnInit, OnDestroy {
   ==================================================================== */
   exportar(inicial:any, final: any){
 
-    console.log(inicial);
-    console.log(final);
-
     if (inicial === null && final === null) {
       Swal.fire('Atención', 'Debes de seleccionar las fechas de busquedad', 'warning');  
       return;
@@ -371,29 +368,7 @@ export class HornoComponent implements OnInit, OnDestroy {
           console.log(err);
           Swal.fire('Error', err.error.msg, 'error');          
         })
-
     
-    
-
-    // this.productService.productExcel()
-    //     .subscribe( ({products}) => {
-
-    //       /* generate a worksheet */
-    //       var ws = XLSX.utils.json_to_sheet(products);
-      
-    //       /* add to workbook */
-    //       var wb = XLSX.utils.book_new();
-    //       XLSX.utils.book_append_sheet(wb, ws, "Productos");
-      
-    //       /* title */
-    //       let title = 'inventario.xls';
-      
-    //       /* write workbook and force a download */
-    //       XLSX.writeFile(wb, title);
-
-    //     });
-
-
   }
 
   convertExcel(altass: Temperatura[], bajass: Temperatura[]){
@@ -415,16 +390,16 @@ export class HornoComponent implements OnInit, OnDestroy {
           data.push({
             "Horno": this.horno.name,
             "Altas": alt.temperatura! + '°',
-            "fecha Alt": `${new Date(alt.fecha).getDay()}/${new Date(alt.fecha).getMonth()}/${new Date(alt.fecha).getFullYear()} ${new Date(alt.fecha).getHours()}:${new Date(alt.fecha).getMinutes()}`,
+            "Fecha Alta": `${new Date(alt.fecha).getDate()}/${new Date(alt.fecha).getMonth() + 1}/${new Date(alt.fecha).getFullYear()} ${new Date(alt.fecha).getHours()}:${new Date(alt.fecha).getMinutes()}`,
             "Bajas": baja.temperatura + '°' || '',
-            "fecha Baj": `${new Date(baja.fecha).getDay()}/${new Date(baja.fecha).getMonth()}/${new Date(baja.fecha).getFullYear()} ${new Date(baja.fecha).getHours()}:${new Date(baja.fecha).getMinutes()}`
+            "Fecha Baja": `${new Date(baja.fecha).getDate()}/${new Date(baja.fecha).getMonth() + 1}/${new Date(baja.fecha).getFullYear()} ${new Date(baja.fecha).getHours()}:${new Date(baja.fecha).getMinutes()}`
           })
 
         }else{
           data.push({
             "Horno": this.horno.name,
             "Altas": alt.temperatura! + '°',
-            "fecha Alt": `${new Date(alt.fecha).getDay()}/${new Date(alt.fecha).getMonth()}/${new Date(alt.fecha).getFullYear()} ${new Date(alt.fecha).getHours()}:${new Date(alt.fecha).getMinutes()}`,
+            "Fecha Alta": `${new Date(alt.fecha).getDate()}/${new Date(alt.fecha).getMonth() + 1}/${new Date(alt.fecha).getFullYear()} ${new Date(alt.fecha).getHours()}:${new Date(alt.fecha).getMinutes()}`,
           })
         }
         
@@ -441,16 +416,16 @@ export class HornoComponent implements OnInit, OnDestroy {
           data.push({
             "Horno": this.horno.name,
             "Altas": alt.temperatura! + '°',
-            "fecha Alt": `${new Date(alt.fecha).getDay()}/${new Date(alt.fecha).getMonth()}/${new Date(alt.fecha).getFullYear()} ${new Date(alt.fecha).getHours()}:${new Date(alt.fecha).getMinutes()}`,
+            "Fecha Alta": `${new Date(alt.fecha).getDate()}/${new Date(alt.fecha).getMonth() + 1}/${new Date(alt.fecha).getFullYear()} ${new Date(alt.fecha).getHours()}:${new Date(alt.fecha).getMinutes()}`,
             "Bajas": baja.temperatura + '°' || '',
-            "fecha Baj": `${new Date(baja.fecha).getDay()}/${new Date(baja.fecha).getMonth()}/${new Date(baja.fecha).getFullYear()} ${new Date(baja.fecha).getHours()}:${new Date(baja.fecha).getMinutes()}`
+            "Fecha Baja": `${new Date(baja.fecha).getDate()}/${new Date(baja.fecha).getMonth() + 1}/${new Date(baja.fecha).getFullYear()} ${new Date(baja.fecha).getHours()}:${new Date(baja.fecha).getMinutes()}`
           })
 
         }else{
           data.push({
             "Horno": this.horno.name,
             "Bajas": baja.temperatura + '°' || '',
-            "fecha Baj": `${new Date(baja.fecha).getDay()}/${new Date(baja.fecha).getMonth()}/${new Date(baja.fecha).getFullYear()} ${new Date(baja.fecha).getHours()}:${new Date(baja.fecha).getMinutes()}`
+            "Fecha Baja": `${new Date(baja.fecha).getDate()}/${new Date(baja.fecha).getMonth() + 1}/${new Date(baja.fecha).getFullYear()} ${new Date(baja.fecha).getHours()}:${new Date(baja.fecha).getMinutes()}`
           })
         }
         
@@ -465,8 +440,10 @@ export class HornoComponent implements OnInit, OnDestroy {
     var wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, this.horno.name);
 
+    let hoy = new Date();
+
     /* title */
-    let title = 'temperaturas.xls';
+    let title = `${new Date(hoy).getDate()}/${new Date(hoy).getMonth()+1}-temperaturas.xls`;
 
     /* write workbook and force a download */
     XLSX.writeFile(wb, title);
