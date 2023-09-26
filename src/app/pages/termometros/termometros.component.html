@@ -6,8 +6,8 @@
 
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Lista de Termometros</h4>
-                <h6 class="card-subtitle">Crea y visualiza todos los Termometros</h6>
+                <h4 class="card-title">Lista de Termocupulas</h4>
+                <h6 class="card-subtitle">Crea y visualiza todos los Termocupulas</h6>
 
                 <div class="row m-t-40">
 
@@ -16,7 +16,7 @@
                         <div class="card">
                             <div class="box bg-info text-center">
                                 <h1 class="font-light text-white"> {{ total }} </h1>
-                                <h6 class="text-white">Termometros</h6>
+                                <h6 class="text-white">Termocupulas</h6>
                             </div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                     <div class="my-2">
 
                         <div>
-                            <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#add-termometro">Crear Termometro</button>
+                            <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#add-termometro">Crear Termocupula</button>
                         </div>
 
                         <label for="mostrar" class="my-2">Mostrar: </label>
@@ -121,7 +121,7 @@ MODAL CREAR CENTRO DE VOTACIÖN
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabelNewCenter">Nuevo Termometro</h4>
+                <h4 class="modal-title" id="myModalLabelNewCenter">Nueva Termocupula</h4>
             </div>
             <div class="modal-body">
 
@@ -130,9 +130,9 @@ MODAL CREAR CENTRO DE VOTACIÖN
                     <div class="form-group has-danger">
 
                         <div class="col-md-12 m-b-20">
-                            <input formControlName="code" type="text" class="form-control" placeholder="Codigo del termometro">
+                            <input formControlName="code" type="text" class="form-control" placeholder="Codigo de la termocupula">
                             <div *ngIf="validate('code')" class="form-control-feedback">
-                                <small> El codigo del termometros es importante </small>
+                                <small> El codigo de la termocupula es importante </small>
                             </div>
                         </div>
 

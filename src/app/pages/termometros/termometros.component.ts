@@ -77,7 +77,7 @@ export class TermometrosComponent implements OnInit {
 
       this.formNewSubmitted = false;
       
-      Swal.fire('Estupendo', 'El nuevo termometro se creo con exito!', 'success');
+      Swal.fire('Estupendo', 'La nueva termocupula se creo con exito!', 'success');
 
     }, (err) => { Swal.fire('Error', err.error.msg, 'error') });
 

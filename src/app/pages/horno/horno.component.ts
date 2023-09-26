@@ -53,7 +53,7 @@ export class HornoComponent implements OnInit, OnDestroy {
   interval(){
     return setInterval( () => {
       this.activatedRoute.params.subscribe( ({id}) => { this.loadHorno(id) });      
-    }, 5000)
+    }, 30000)
   }
 
   /** ======================================================================

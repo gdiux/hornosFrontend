@@ -28,7 +28,7 @@ const routes: Routes = [
         { path: 'perfil/:id', component: PerfilComponent, canActivate: [AdminGuard], data:{ title: 'Perfil' } },
         { path: 'horno/:id', component: HornoComponent, canActivate: [AdminGuard], data:{ title: 'Horno' } },
         { path: 'hornos', component: HornosComponent, canActivate: [AdminGuard], data:{ title: 'Hornos' } },
-        { path: 'termometros', component: TermometrosComponent, canActivate: [AdminGuard], data:{ title: 'Termometros' } },
+        { path: 'termocupulas', component: TermometrosComponent, canActivate: [AdminGuard], data:{ title: 'Termocupulas' } },
         { path: 'usuarios', component: UsuariosComponent, canActivate: [AdminGuard], data:{ title: 'Usuarios' } },
         
         { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
