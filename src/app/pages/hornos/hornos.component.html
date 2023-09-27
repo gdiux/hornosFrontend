@@ -52,7 +52,7 @@
                     <table id="demo-foo-addrow" class="table m-t-30 table-hover no-wrap contact-list" data-page-size="10">
                         <thead>
                             <tr>
-                                <th>Codigo</th>
+                                <th>Nombre</th>
                                 <th>Estado</th>
                                 <th>Action</th>
                             </tr>
@@ -137,17 +137,17 @@ MODAL CREAR CENTRO DE VOTACIÖN
                     </div>
 
                     <div class="form-group">
-                        <label>Seleccionar termocupula de Baja</label>
+                        <label>Seleccionar termocupla de Baja</label>
                         <select formControlName="baja" class="form-control">
-                            <option value="none">Seleccionar termocupula</option>
+                            <option value="none">Seleccionar termocupla</option>
                             <option *ngFor="let termometro of termometros" [value]="termometro.tid" > {{ termometro.code }} </option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label>Seleccionar termocupula de Alta</label>
+                        <label>Seleccionar termocupla de Alta</label>
                         <select formControlName="alta" class="form-control">
-                            <option value="none">Seleccionar termocupula</option>
+                            <option value="none">Seleccionar termocupla</option>
                             <option *ngFor="let termometro of termometros" [value]="termometro.tid" > {{ termometro.code }} </option>
                         </select>
                     </div>
