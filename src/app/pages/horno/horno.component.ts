@@ -192,7 +192,7 @@ export class HornoComponent implements OnInit, OnDestroy {
     datasets: [
       {
         data: [0],
-        label: 'Termocupula Alta',
+        label: 'Termocupla Alta',
         fill: true,
         tension: 0.5,
         borderColor: 'rgba(245,39,39,0.8)',
@@ -246,7 +246,7 @@ export class HornoComponent implements OnInit, OnDestroy {
     datasets: [
       {
         data: [0],
-        label: 'Termocupula Baja',
+        label: 'Termocupla Baja',
         borderColor: 'rgba(39,123,245,0.8)',
         pointBackgroundColor: 'rgba(39,123,245,0.8)',
         fill: true,
@@ -276,36 +276,54 @@ export class HornoComponent implements OnInit, OnDestroy {
   });
 
   updateHorno(){
-       
-    this.formSubmitted = true;   
+
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "de editar este horno!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, editar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.formSubmitted = true;   
     
-    if (this.formHorno.invalid) {
-      return;
-    }
+        if (this.formHorno.invalid) {
+          return;
+        }
 
-    if (this.formHorno.value.baja === 'none') {
-      Swal.fire('Atención', 'Debes de seleccionar un termometro de baja', 'warning');
-      return;
-    }
-    if (this.formHorno.value.alta === 'none') {
-      Swal.fire('Atención', 'Debes de seleccionar un termometro de alta', 'warning');
-      return;
-    }
+        if (this.formHorno.value.baja === 'none') {
+          Swal.fire('Atención', 'Debes de seleccionar un termometro de baja', 'warning');
+          return;
+        }
+        if (this.formHorno.value.alta === 'none') {
+          Swal.fire('Atención', 'Debes de seleccionar un termometro de alta', 'warning');
+          return;
+        }
 
-    if (this.formHorno.value.alta === this.formHorno.value.baja) {
-      Swal.fire('Atención', 'Los termometros deben ser diferentes', 'warning');
-      return;
-    }
+        if (this.formHorno.value.alta === this.formHorno.value.baja) {
+          Swal.fire('Atención', 'Los termometros deben ser diferentes', 'warning');
+          return;
+        }
 
-    this.hornosService.updateHorno(this.formHorno.value, this.horno.hid!)
-    .subscribe( ({horno}) => {
-      
+        this.hornosService.updateHorno(this.formHorno.value, this.horno.hid!)
+        .subscribe( ({horno}) => {
+          
 
-      this.formSubmitted = false;
-      
-      Swal.fire('Estupendo', 'El nuevo horno se creo con exito!', 'success');
+          this.formSubmitted = false;
+          
+          Swal.fire('Estupendo', 'El nuevo horno se creo con exito!', 'success');
 
-    }, (err) => { Swal.fire('Error', err.error.msg, 'error') });
+        }, (err) => { Swal.fire('Error', err.error.msg, 'error') });
+
+      }
+    })
+
+       
+    
 
   }
 
