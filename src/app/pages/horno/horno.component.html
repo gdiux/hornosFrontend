@@ -3,11 +3,11 @@
         <div class="d-flex justify-content-end">
             <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#update-horno">Editar Horno</button>
         </div>
-        <h2 *ngIf="horno" class="mb-0 text-center" > {{ horno.name }} </h2>
+        <h2 *ngIf="horno" class="mb-0 text-center"> {{ horno.name }} </h2>
 
         <hr>
 
-        <div class="d-flex justify-content-center flex-wrap gap-4">            
+        <div class="d-flex justify-content-center flex-wrap gap-4">
 
             <div class="form-group mr-2">
                 <label class="" for="">Desde</label>
@@ -19,14 +19,32 @@
                 <input type="datetime-local" class="form-control" (change)="end.value" #end>
             </div>
 
+            <div class="form-group mr-2">
+                <label class="selectIn" for="">Intervalo</label>
+                <select #interval class="custom-select col-12" id="selectIn">
+                    <option value="1">1 Minuto</option>
+                    <option value="5">5 Minuto</option>
+                    <option value="10">10 Minuto</option>
+                    <option value="15">15 Minuto</option>
+                    <option value="30">30 Minuto</option>
+                    <option value="60">60 Minuto</option>
+                </select>
+            </div>
+
             <div class="col-auto ms-2 d-flex align-items-center">
-                <button type="button" class="btn btn-outline-success" (click)="exportar(initial.value, end.value)"> 
-                    <i class="fa fa-file-excel-o"></i> Exportar 
+                <button [disabled]="loadingExcel" type="button" class="btn btn-outline-success" (click)="exportar(initial.value, end.value, interval.value)"> 
+                    <i class="fa fa-file-excel-o"></i> 
+                    <span *ngIf="!loadingExcel">
+                        Exportar 
+                    </span>
+                    <span *ngIf="loadingExcel">
+                        Cargando...
+                    </span>
                 </button>
             </div>
-            
-            
-            
+
+
+
         </div>
 
 
@@ -41,10 +59,12 @@
         <div class="card mb-0">
             <div class="d-flex flex-row">
                 <div class="p-10 bg-danger">
-                    <h3 class="text-white box m-b-0"><i class="fa fa-thermometer"></i></h3></div>
+                    <h3 class="text-white box m-b-0"><i class="fa fa-thermometer"></i></h3>
+                </div>
                 <div class="align-self-center m-l-20">
                     <h3 class="m-b-0 text-danger">Termocupla</h3>
-                    <h5 *ngIf="horno" class="text-muted m-b-0">Codigo {{ horno.alta.code }} </h5></div>
+                    <h5 *ngIf="horno" class="text-muted m-b-0">Codigo {{ horno.alta.code }} </h5>
+                </div>
             </div>
         </div>
 
@@ -52,36 +72,32 @@
             <div class="card-body">
 
                 <div class="col-12">
-                    <canvas baseChart height="400"
-                        [type]="'line'"
-                        [data]="lineChartDataAlta"
-                        [options]="lineChartOptions"
-                        [legend]="lineChartLegend">
+                    <canvas baseChart height="400" [type]="'line'" [data]="lineChartDataAlta" [options]="lineChartOptions" [legend]="lineChartLegend">
                     </canvas>
                 </div>
 
                 <h2 class="mb-0">Termocupla Alta</h2>
-                
-                
-                
+
+
+
                 <div class="table-responsive">
                     <table id="demo-foo-addrow" class="table m-t-30 table-hover no-wrap contact-list" data-page-size="10">
                         <thead>
-                            <tr>                            
+                            <tr>
                                 <th>Fecha</th>
                                 <th>Temperatura</th>
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                             <tr *ngIf="altas.length === 0">
                                 <td colspan="7">
                                     <h3 class="mb-0 text-center"> Aun no existen registros de temperaturas Altas</h3>
                                 </td>
                             </tr>
-                            
+
                             <ng-container *ngIf="altas.length > 0">
-                                
+
                                 <tr *ngFor="let alta of altas">
                                     <td class="align-middle">
                                         {{ alta.fecha | date:'medium' }}
@@ -91,79 +107,77 @@
                                             {{ alta.temperatura }}°
                                         </p>
                                     </td>
-                                    
+
                                 </tr>
-                                
+
                             </ng-container>
                         </tbody>
                     </table>
                 </div>
-                
+
             </div>
         </div>
     </div>
-        
+
     <div class="col-md-6">
 
         <div class="card mb-0">
             <div class="d-flex flex-row">
                 <div class="p-10 bg-info">
-                    <h3 class="text-white box m-b-0"><i class="fa fa-thermometer-1"></i></h3></div>
+                    <h3 class="text-white box m-b-0"><i class="fa fa-thermometer-1"></i></h3>
+                </div>
                 <div class="align-self-center m-l-20">
                     <h3 class="m-b-0 text-info"> Termocupla </h3>
-                    <h5 *ngIf="horno" class="text-muted m-b-0">Codigo {{ horno.baja.code }} </h5></div>
+                    <h5 *ngIf="horno" class="text-muted m-b-0">Codigo {{ horno.baja.code }} </h5>
+                </div>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
 
-            <div class="col-12">
-                <canvas baseChart height="400"
-                    [type]="'line'"
-                    [data]="lineChartDataBaja"
-                    [options]="lineChartOptions"
-                    [legend]="lineChartLegend">
+                <div class="col-12">
+                    <canvas baseChart height="400" [type]="'line'" [data]="lineChartDataBaja" [options]="lineChartOptions" [legend]="lineChartLegend">
                 </canvas>
-            </div>
+                </div>
 
-            <h2 class="mb-0">Termocupla Baja</h2>
+                <h2 class="mb-0">Termocupla Baja</h2>
 
-            <div class="table-responsive">
-                <table id="demo-foo-addrow" class="table m-t-30 table-hover no-wrap contact-list" data-page-size="10">
-                    <thead>
-                        <tr>                            
-                            <th>Fecha</th>
-                            <th>Temperatura</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div class="table-responsive">
+                    <table id="demo-foo-addrow" class="table m-t-30 table-hover no-wrap contact-list" data-page-size="10">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Temperatura</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                        <tr *ngIf="bajas.length === 0">
-                            <td colspan="7">
-                                <h3 class="mb-0 text-center"> Aun no existen registros de temperaturas Bajas</h3>
-                            </td>
-                        </tr>
-                        
-                        <ng-container *ngIf="bajas.length > 0">
-                            
-                            <tr *ngFor="let baja of bajas">
-                                <td class="align-middle">
-                                    {{ baja.fecha | date:'short' }}
+                            <tr *ngIf="bajas.length === 0">
+                                <td colspan="7">
+                                    <h3 class="mb-0 text-center"> Aun no existen registros de temperaturas Bajas</h3>
                                 </td>
-                                <td class="align-middle">
-                                    <p class="mb-0 text-right">
-                                        {{ baja.temperatura }}°
-                                    </p>
-                                </td>
-                                
                             </tr>
 
-                        </ng-container>
-                    </tbody>
-                </table>
+                            <ng-container *ngIf="bajas.length > 0">
+
+                                <tr *ngFor="let baja of bajas">
+                                    <td class="align-middle">
+                                        {{ baja.fecha | date:'short' }}
+                                    </td>
+                                    <td class="align-middle">
+                                        <p class="mb-0 text-right">
+                                            {{ baja.temperatura }}°
+                                        </p>
+                                    </td>
+
+                                </tr>
+
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 
 </div>

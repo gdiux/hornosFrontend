@@ -341,50 +341,66 @@ export class HornoComponent implements OnInit, OnDestroy {
   /** ================================================================
    *   EXPORTAR EXCEL
   ==================================================================== */
-  exportar(inicial:any, final: any){
-
+  public loadingExcel: boolean = false;
+  exportar(inicial:any, final: any, intervalo: any){
+    
     if (inicial === null && final === null) {
       Swal.fire('Atención', 'Debes de seleccionar las fechas de busquedad', 'warning');  
       return;
     }
+    
+    this.loadingExcel = true;
+
+    // let queryA = {
+    //   termometro: this.horno.alta._id!,
+    //   fechaInicio: new Date(inicial),
+    //   fechaFin: new Date(final),
+    //   fecha: { $gte: new Date(inicial), $lt: new Date(final) },
+    //   intervalo: Number(intervalo),
+    //   desde: 0,
+    //   hasta: 10000
+    // };
 
     let queryA = {
       termometro: this.horno.alta._id!,
-      fecha: { $gte: new Date(inicial), $lt: new Date(final) },
-      desde: 0,
-      hasta: 10000
+      fechaInicio: new Date(inicial),
+      fechaFin: new Date(final),
+      intervalo: Number(intervalo)
     };
-
+    
     let queryB = {
       termometro: this.horno.baja._id!,
-      fecha: { $gte: new Date(inicial), $lt: new Date(final) },
-      desde: 0,
-      hasta: 10000
+      fechaInicio: new Date(inicial),
+      fechaFin: new Date(final),
+      intervalo: Number(intervalo)
     };
 
     let altas: any[] = [];
     let bajas: any[] = [];
 
-    this.temperaturasService.loadTemperaturas(queryA)
+    this.temperaturasService.loadTemperaturasInterval(queryA)
         .subscribe( ({temperaturas}) => {
 
           altas = temperaturas;
 
-          this.temperaturasService.loadTemperaturas(queryB)
+          this.temperaturasService.loadTemperaturasInterval(queryB)
           .subscribe( ({temperaturas}) => {
 
             bajas = temperaturas;
+            this.loadingExcel = false;
             this.convertExcel(altas, bajas);
 
           }, (err) =>{
             console.log(err);
-            Swal.fire('Error', err.error.msg, 'error');          
+            Swal.fire('Error', err.error.msg, 'error');
+            this.loadingExcel = false;     
           })
           
 
         }, (err) =>{
           console.log(err);
-          Swal.fire('Error', err.error.msg, 'error');          
+          Swal.fire('Error', err.error.msg, 'error');  
+          this.loadingExcel = false;        
         })
     
   }

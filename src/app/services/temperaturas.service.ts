@@ -41,6 +41,13 @@ export class TemperaturasService {
   }
 
   /** ================================================================
+   *  LOAD TEMPERATURAS
+  ==================================================================== */
+  loadTemperaturasInterval(query: any){
+    return this.http.post<{ok: boolean, temperaturas: Temperatura[], total:number}>( `${base_url}/temperaturas/intervalo`, query, this.headers );
+  }
+
+  /** ================================================================
    *  CREATE TEMPERATURA
   ==================================================================== */
   createTemperatura( formaData: any ){
