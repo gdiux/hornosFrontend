@@ -138,6 +138,43 @@ export class HornoComponent implements OnInit, OnDestroy {
   }
 
 
+  /** ======================================================================
+   * CHAGEN ESTADO TEMPERATURAS
+  ====================================================================== */
+  changeEstado(temp: Temperatura, tipo: string){
+
+    Swal.fire({
+      title: "Estas seguro?",
+      text: "De cambiar el estado de este registro!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, cambiar!",
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        if (temp.estado === 'Normal') {
+          temp.estado = 'Anormal';
+        }else if( temp.estado === 'Anormal' ){
+          temp.estado = 'Normal';
+        }
+    
+        this.temperaturasService.updateTemperatura({estado: temp.estado}, temp.teid!)
+            .subscribe( ({temperatura}) => {
+    
+    
+    
+            }, (err) => {
+              console.log(err);
+              Swal.fire('Error', err.error.msg, 'error');          
+            })
+
+      }
+    });
+    
+  }
 
   /** ======================================================================
    * LOAD TEMP ALTAS
@@ -322,9 +359,6 @@ export class HornoComponent implements OnInit, OnDestroy {
       }
     })
 
-       
-    
-
   }
 
   /** ======================================================================
@@ -424,8 +458,10 @@ export class HornoComponent implements OnInit, OnDestroy {
           data.push({
             "Horno": this.horno.name,
             "Altas": alt.temperatura! + '°',
+            "Estado A": alt.estado,
             "Fecha Alta": `${new Date(alt.fecha).getDate()}/${new Date(alt.fecha).getMonth() + 1}/${new Date(alt.fecha).getFullYear()} ${new Date(alt.fecha).getHours()}:${new Date(alt.fecha).getMinutes()}`,
             "Bajas": baja.temperatura + '°' || '',
+            "Estado B": baja.estado,
             "Fecha Baja": `${new Date(baja.fecha).getDate()}/${new Date(baja.fecha).getMonth() + 1}/${new Date(baja.fecha).getFullYear()} ${new Date(baja.fecha).getHours()}:${new Date(baja.fecha).getMinutes()}`
           })
 
@@ -433,6 +469,7 @@ export class HornoComponent implements OnInit, OnDestroy {
           data.push({
             "Horno": this.horno.name,
             "Altas": alt.temperatura! + '°',
+            "Estado A": alt.estado,
             "Fecha Alta": `${new Date(alt.fecha).getDate()}/${new Date(alt.fecha).getMonth() + 1}/${new Date(alt.fecha).getFullYear()} ${new Date(alt.fecha).getHours()}:${new Date(alt.fecha).getMinutes()}`,
           })
         }
@@ -450,8 +487,10 @@ export class HornoComponent implements OnInit, OnDestroy {
           data.push({
             "Horno": this.horno.name,
             "Altas": alt.temperatura! + '°',
+            "Estado A": alt.estado,
             "Fecha Alta": `${new Date(alt.fecha).getDate()}/${new Date(alt.fecha).getMonth() + 1}/${new Date(alt.fecha).getFullYear()} ${new Date(alt.fecha).getHours()}:${new Date(alt.fecha).getMinutes()}`,
             "Bajas": baja.temperatura + '°' || '',
+            "Estado B": baja.estado,
             "Fecha Baja": `${new Date(baja.fecha).getDate()}/${new Date(baja.fecha).getMonth() + 1}/${new Date(baja.fecha).getFullYear()} ${new Date(baja.fecha).getHours()}:${new Date(baja.fecha).getMinutes()}`
           })
 
@@ -459,6 +498,7 @@ export class HornoComponent implements OnInit, OnDestroy {
           data.push({
             "Horno": this.horno.name,
             "Bajas": baja.temperatura + '°' || '',
+            "Estado B": baja.estado,
             "Fecha Baja": `${new Date(baja.fecha).getDate()}/${new Date(baja.fecha).getMonth() + 1}/${new Date(baja.fecha).getFullYear()} ${new Date(baja.fecha).getHours()}:${new Date(baja.fecha).getMinutes()}`
           })
         }

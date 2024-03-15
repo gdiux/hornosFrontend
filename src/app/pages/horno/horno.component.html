@@ -42,13 +42,7 @@
                     </span>
                 </button>
             </div>
-
-
-
         </div>
-
-
-
     </div>
 </div>
 
@@ -100,11 +94,15 @@
 
                                 <tr *ngFor="let alta of altas">
                                     <td class="align-middle">
-                                        {{ alta.fecha | date:'medium' }}
+                                        <span *ngIf="alta.estado">  
+                                            <i *ngIf="alta.estado === 'Normal'" class="text-success mdi mdi-check"></i>
+                                            <i *ngIf="alta.estado === 'Anormal'" class="text-warning mdi mdi-alert-outline"></i>
+                                        </span> {{ alta.fecha | date:'medium' }}
                                     </td>
                                     <td class="align-middle">
                                         <p class="mb-0 text-right">
                                             {{ alta.temperatura }}°
+                                            <button type="button" (click)="changeEstado(alta, 'Alta')" class="btn btn-sm btn-icon btn-pure btn-outline text-primary" data-toggle="Actualizar estado" data-original-title="Delete"><i class="mdi mdi-refresh" aria-hidden="true"></i></button>
                                         </p>
                                     </td>
 
@@ -162,11 +160,15 @@
 
                                 <tr *ngFor="let baja of bajas">
                                     <td class="align-middle">
-                                        {{ baja.fecha | date:'short' }}
+                                        <span *ngIf="baja.estado">  
+                                            <i *ngIf="baja.estado === 'Normal'" class="text-success mdi mdi-check"></i>
+                                            <i *ngIf="baja.estado === 'Anormal'" class="text-warning mdi mdi-alert-outline"></i>
+                                        </span> {{ baja.fecha | date:'short' }}
                                     </td>
                                     <td class="align-middle">
                                         <p class="mb-0 text-right">
                                             {{ baja.temperatura }}°
+                                            <button type="button" (click)="changeEstado(baja, 'Baja')" class="btn btn-sm btn-icon btn-pure btn-outline text-primary" data-toggle="Actualizar estado" data-original-title="Delete"><i class="mdi mdi-refresh" aria-hidden="true"></i></button>
                                         </p>
                                     </td>
 

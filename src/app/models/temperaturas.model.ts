@@ -6,6 +6,7 @@ export class Temperatura{
         public termometro: Termometro,
         public status: boolean,
         public fecha: Date,
+        public estado: string,
         public teid?: string,
         public _id?: string,
     ){}
